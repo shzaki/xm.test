@@ -40,14 +40,14 @@
 		<div class="form-group row">
 			<label for="fromDate" class="col-sm-2 col-form-label">From</label>
 			<div class="col-sm-10">
-				<input required class="form-control" id="fromDate" placeholder="Please enter from date">
+				<input required class="form-control date-picker" id="fromDate" placeholder="Please enter from date">
 			</div>
 		</div>
 
 		<div class="form-group row">
 			<label for="toDate" class="col-sm-2 col-form-label">To</label>
 			<div class="col-sm-10">
-				<input required class="form-control" id="toDate" placeholder="Please enter to date">
+				<input required class="form-control date-picker" id="toDate" placeholder="Please enter to date">
 			</div>
 		</div>
 
@@ -57,17 +57,20 @@
 
 		<script type="text/javascript">
 			$(function () {
-				$('#fromDate').datepicker({ maxDate: new Date,
+				$('#fromDate').datepicker({ maxDate: new Date, dateFormat:'yy-mm-dd',
 					onSelect: function(selected) {
 					$("#toDate").datepicker("option","minDate", selected)
-				}
-			});
-				$('#toDate').datepicker({ maxDate: new Date,
+					}
+				});
+				$('#toDate').datepicker({ maxDate: new Date, dateFormat:'yy-mm-dd',
 					onSelect: function(selected) {
-					$("#fromDate").datepicker("option","maxDate", selected)
-				}
+					$("#fromDate ").datepicker("option","maxDate", selected)
+					}
+				});
+
+				$(".date-picker").keypress(function(event) {event.preventDefault();});
 			});
-			});
+
 		</script>
 	</form>
 </div>
