@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Modules\GoogleFinanceApi;
+use App\Modules\Nasdaq;
 use Illuminate\Http\Request;
 use \App\Mail\NasdaqQuotesMail;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
+
 
 class NasdaqController extends Controller
 {
@@ -13,25 +15,9 @@ class NasdaqController extends Controller
 	{
 		$inputs = $request->only(['symbol', 'email', 'fromDate', 'toDate']);
 
-		$rules  = [
-			'symbol' 	=> 'required',
-			'email'		=> 'required|email',
-			'fromDate'  =>  'required|date|date_format:Y-m-d|before:tomorrow|before_or_equal:toDate',
-			'toDate'    =>  'required|date|date_format:Y-m-d|before:tomorrow|after_or_equal:fromDate'
-		];
+		$nasdaqObj = new Nasdaq($inputs);
 
-		$messages = [
-			// Custom Messages if needed
-		];
-
-		// data validation
-		$validator = Validator::make($inputs, $rules, $messages);
-
-		if ($validator->fails()) {
-			return redirect('/test')
-				->withErrors($validator)
-				->withInput();
-		}
+		$googleObj = new GoogleFinanceApi($nasdaqObj);
 
 		// send api
 
@@ -52,8 +38,11 @@ class NasdaqController extends Controller
 		// Add Symbols to DB or cache
 		// Do validation on it clientside and server side
 
-		//Mail::to($data['email'])->send(new NasdaqQuotesMail($data));
+		// Add loading page
+		// Add sweet alert
 
+		//Mail::to($data['email'])->send(new NasdaqQuotesMail($data));
+		// find a proper smtp
 		return view('test')->with($inputs);
 	}
 }

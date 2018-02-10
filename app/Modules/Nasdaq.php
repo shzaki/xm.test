@@ -8,18 +8,43 @@
 
 namespace App\Modules;
 
+use Illuminate\Support\Facades\Validator;
 
 class Nasdaq
 {
 
 	private $symbol, $email, $fromDate, $toDate;
 
-	public function __construct($data)
+	/**
+	 * Nasdaq constructor.
+	 * @param $inputs
+	 */
+	public function __construct($inputs)
 	{
-		$this->symbol 	= $data['symbol'];
-		$this->email 	= $data['email'];
-		$this->fromDate = $data['fromDate'];
-		$this->toDate 	= $data['toDate'];
+		$this->symbol 	= $inputs['symbol'];
+		$this->email 	= $inputs['email'];
+		$this->fromDate = $inputs['fromDate'];
+		$this->toDate 	= $inputs['toDate'];
+
+		$rules  = [
+			'symbol' 	=> 'required',
+			'email'		=> 'required|email',
+			'fromDate'  =>  'required|date|date_format:Y-m-d|before:tomorrow|before_or_equal:toDate',
+			'toDate'    =>  'required|date|date_format:Y-m-d|before:tomorrow|after_or_equal:fromDate'
+		];
+
+		$messages = [
+			// Custom Messages if needed
+		];
+
+		// data validation
+		$validator = Validator::make($inputs, $rules, $messages);
+
+		if ($validator->fails()) {
+			return redirect('/test')
+				->withErrors($validator)
+				->withInput();
+		}
 	}
 
 	/**
