@@ -41,7 +41,7 @@ class Nasdaq
 		$validator = Validator::make($inputs, $rules, $messages);
 
 		if ($validator->fails()) {
-			return redirect('/test')
+			return redirect('/nasdaq')
 				->withErrors($validator)
 				->withInput();
 		}

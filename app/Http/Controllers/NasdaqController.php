@@ -50,6 +50,6 @@ class NasdaqController extends Controller
 		// find a proper smtp
 
 
-		return view('test')->with($viewData);
+		return view('nasdaq')->with($viewData);
 	}
 }
