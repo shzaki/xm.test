@@ -13,13 +13,18 @@ class NasdaqController extends Controller
 {
     public function postForm(Request $request)
 	{
+
 		$inputs = $request->only(['symbol', 'email', 'fromDate', 'toDate']);
+
+		$viewData = $inputs;
 
 		$nasdaqObj = new Nasdaq($inputs);
 
 		$googleObj = new GoogleFinanceApi($nasdaqObj);
 
-		// send api
+		$results = $googleObj->callApi();
+
+		$viewData['results'] = $results;
 
 		// get result back as attachment
 
@@ -43,6 +48,8 @@ class NasdaqController extends Controller
 
 		//Mail::to($data['email'])->send(new NasdaqQuotesMail($data));
 		// find a proper smtp
-		return view('test')->with($inputs);
+
+
+		return view('test')->with($viewData);
 	}
 }

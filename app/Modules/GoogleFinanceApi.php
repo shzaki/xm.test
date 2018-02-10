@@ -9,6 +9,8 @@
 namespace App\Modules;
 
 use Carbon\Carbon;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
 /**
  * Class GoogleFinanceApi
  * @package App\Modules
@@ -21,7 +23,7 @@ use Carbon\Carbon;
  */
 class GoogleFinanceApi
 {
-	private $symbol, $fromDate, $toDate, $url, $output;
+	private $url;
 
 	// TODO: Change to use interface or abstract class
 	public function __construct(Nasdaq $nasdaq, $output = 'csv')
@@ -31,5 +33,24 @@ class GoogleFinanceApi
 
 		$query_string = 'output='. $output . '&q=' .  $nasdaq->getSymbol() . '&startDate=' . urlencode($startDate) . '&endDate=' . urlencode($endDate);
 		$this->url = 'https://finance.google.com/finance/historical?' . $query_string;
+ 	}
+
+ 	public function callApi()
+	{
+		$client = new Client();
+		$response = $client->request('GET', $this->url, ['stream' => true]);
+
+		$csvContents = $response->getBody()->getContents();
+
+		$csvLines = explode("\n", $csvContents);
+
+		$results = [];
+		foreach ($csvLines as $line) {
+			if(!empty($line)) {
+				$results[] =  explode(",", $line);
+			}
+		}
+
+		return $results;
 	}
 }
