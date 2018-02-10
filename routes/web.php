@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,7 +19,10 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return view('test');
 });
+Route::get('/mail', function () {
+	Mail::to('sh_zaki@yahoo.com')->send(new NasdaqQuotes());
 
-Route::post('/test', function () {
-    return view('test');
+	return view('test');
 });
+
+Route::post('/test', '\App\Http\Controllers\NasdaqController@postForm');

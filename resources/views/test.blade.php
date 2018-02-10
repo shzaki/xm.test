@@ -24,30 +24,31 @@
 
 <div class="container">
 	<form autocomplete="off" id="apiForm" class="form-horizontal validate-me" method="post" action="/test">
+		@csrf
 		<div class="form-group row">
 			<label for="symbol" class="col-sm-2 col-form-label">Symbol</label>
 			<div class="col-sm-10">
-				<input required type="text"  class="form-control-plaintext" id="symbol"  placeholder="Please enter a company symbol">
+				<input required type="text" name="symbol" class="form-control-plaintext" id="symbol"  placeholder="Please enter a company symbol">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="email" class="col-sm-2 col-form-label">Email</label>
 			<div class="col-sm-10">
-				<input required type="email" class="form-control" id="email" placeholder="Please enter your email">
+				<input required type="email" name="email" class="form-control" id="email" placeholder="Please enter your email">
 			</div>
 		</div>
 
 		<div class="form-group row">
 			<label for="fromDate" class="col-sm-2 col-form-label">From</label>
 			<div class="col-sm-10">
-				<input required class="form-control date-picker" id="fromDate" placeholder="Please enter from date">
+				<input required name="fromDate" class="form-control date-picker" id="fromDate" placeholder="Please enter from date">
 			</div>
 		</div>
 
 		<div class="form-group row">
 			<label for="toDate" class="col-sm-2 col-form-label">To</label>
 			<div class="col-sm-10">
-				<input required class="form-control date-picker" id="toDate" placeholder="Please enter to date">
+				<input required name="toDate" class="form-control date-picker" id="toDate" placeholder="Please enter to date">
 			</div>
 		</div>
 
