@@ -57,8 +57,16 @@
 
 		<script type="text/javascript">
 			$(function () {
-				$('#fromDate').datepicker();
-				$('#toDate').datepicker();
+				$('#fromDate').datepicker({ maxDate: new Date,
+					onSelect: function(selected) {
+					$("#toDate").datepicker("option","minDate", selected)
+				}
+			});
+				$('#toDate').datepicker({ maxDate: new Date,
+					onSelect: function(selected) {
+					$("#fromDate").datepicker("option","maxDate", selected)
+				}
+			});
 			});
 		</script>
 	</form>
