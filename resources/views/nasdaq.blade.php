@@ -22,7 +22,7 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
 <div class="container">
-	@include('form ')
+	@include('form')
 </div>
 @if(isset($results) and is_array($results))
 	<div class="container">

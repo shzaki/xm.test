@@ -5,15 +5,30 @@ namespace App\Http\Controllers;
 use App\Modules\GoogleFinanceApi;
 use App\Modules\Nasdaq;
 use Illuminate\Http\Request;
-use \App\Mail\NasdaqQuotesMail;
-use Illuminate\Support\Facades\Mail;
 
 
 class NasdaqController extends Controller
 {
+	/**
+	 * Shows the Nasdaq Form
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+    public function getForm()
+	{
+		return view('nasdaq');
+	}
+
+	/**
+	 * Posts the Nasdaq form
+	 * Gets back the results of the google finance API to fill the datatable and chart
+	 *
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
     public function postForm(Request $request)
 	{
-
 		$inputs = $request->only(['symbol', 'email', 'fromDate', 'toDate']);
 
 		$viewData = $inputs;
@@ -26,7 +41,6 @@ class NasdaqController extends Controller
 
 		$viewData['results'] 	 = $results;
 		$viewData['jsonResults'] = $jsonResults;
-
 
 
 		// Arrange source code

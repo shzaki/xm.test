@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sh_za
- * Date: 10-Feb-18
- * Time: 11:00 AM
- */
 
 namespace App\Modules;
 
@@ -12,11 +6,11 @@ use Illuminate\Support\Facades\Validator;
 
 class Nasdaq
 {
-
 	private $symbol, $email, $fromDate, $toDate;
 
 	/**
 	 * Nasdaq constructor.
+	 *
 	 * @param $inputs
 	 */
 	public function __construct($inputs)

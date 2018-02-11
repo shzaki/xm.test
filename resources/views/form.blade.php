@@ -1,4 +1,4 @@
-<form autocomplete="off" id="apiForm" class="form-horizontal validate-me" method="post" action="/test">
+<form autocomplete="off" id="apiForm" class="form-horizontal validate-me" method="post" action="{{route('nasdaq')}}">
 	@csrf
 	<div class="form-group row">
 		<label for="symbol" class="col-sm-2 col-form-label">Symbol</label>

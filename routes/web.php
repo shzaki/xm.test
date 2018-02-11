@@ -12,17 +12,5 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/test', function () {
-    return view('nasdaq');
-});
-Route::get('/mail', function () {
-	Mail::to('sh_zaki@yahoo.com')->send(new NasdaqQuotes());
-
-	return view('test');
-});
-
-Route::post('/test', '\App\Http\Controllers\NasdaqController@postForm');
+Route::get('/nasdaq',  '\App\Http\Controllers\NasdaqController@getForm')->name('nasdaq');
+Route::post('/nasdaq', '\App\Http\Controllers\NasdaqController@postForm')->name('nasdaq');
