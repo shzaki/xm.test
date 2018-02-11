@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CsvHelper;
 use App\Modules\GoogleFinanceApi;
 use App\Modules\Nasdaq;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NasdaqQuotesMail;
 
 
 class NasdaqController extends Controller
@@ -43,7 +46,6 @@ class NasdaqController extends Controller
 		$viewData['results'] 	 = $results;
 		$viewData['jsonResults'] = $jsonResults;
 
-
 		// Arrange source code
 
 		// Add Symbols to DB or cache
@@ -52,13 +54,18 @@ class NasdaqController extends Controller
 		// Add loading page
 		// Add sweet alert
 
-		//Mail::to($viewData['email'])->send(new NasdaqQuotesMail($viewData));
+		Mail::to($viewData['email'])->send(new NasdaqQuotesMail($viewData));
 		// find a proper smtp
 
 
 		return view('nasdaq')->with($viewData);
 	}
 
+	/**
+	 * Getting Customers' symbols
+	 *
+	 * @return array|string
+	 */
 	public function getSymbols()
 	{
 		try {
@@ -66,7 +73,7 @@ class NasdaqController extends Controller
 			$response 	 = $client->request('GET', 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NASDAQ&render=download', ['stream' => true]);
 			$csvContents = $response->getBody()->getContents();
 
-			$companies 	 = GoogleFinanceApi::convertCsvToArray($csvContents);
+			$companies 	 = CsvHelper::convertCsvToArray($csvContents);
 
 			array_forget($companies, 0);
 
@@ -78,12 +85,9 @@ class NasdaqController extends Controller
 
 			return $results;
 
-
-
-
 		} catch (\Exception $e){
 
-			return [$e->getMessage(), ''];
+			return $e->getMessage();
 		}
 	}
 }

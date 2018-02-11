@@ -2,11 +2,8 @@
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
 
 <div id="chart" style="height: 100%"></div>
-
 <script>
-
 	$(function() {
-
 		data = ({{$jsonResults}});
 
 		console.log(data);
@@ -15,17 +12,15 @@
 			rangeSelector: {
 				selected: 1
 			},
-
 			title: {
-				text: 'AAPL Stock Price'
+				text: 'History quotes for {{$symbol}} from {{$fromDate}} to {{$toDate}}'
 			},
-
 			series: [{
 				type: 'candlestick',
 				name: 'AAPL Stock Price',
 				data: data,
 				dataGrouping: {
-					units: [
+					/*units: [
 						[
 							'week', // unit name
 							[1] // allowed multiples
@@ -33,7 +28,7 @@
 							'month',
 							[1, 2, 3, 4, 6]
 						]
-					]
+					]*/
 				}
 			}]
 		});
