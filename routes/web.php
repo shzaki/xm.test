@@ -17,7 +17,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function () {
-    return view('test');
+    return view('nasdaq');
 });
 Route::get('/mail', function () {
 	Mail::to('sh_zaki@yahoo.com')->send(new NasdaqQuotes());

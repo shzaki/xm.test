@@ -37,20 +37,24 @@ class GoogleFinanceApi
 
  	public function callApi()
 	{
-		$client = new Client();
-		$response = $client->request('GET', $this->url, ['stream' => true]);
+		try {
+			$client = new Client();
+			$response = $client->request('GET', $this->url, ['stream' => true]);
 
-		$csvContents = $response->getBody()->getContents();
+			$csvContents = $response->getBody()->getContents();
 
-		$csvLines = explode("\n", $csvContents);
+			$csvLines = explode("\n", $csvContents);
 
-		$results = [];
-		foreach ($csvLines as $line) {
-			if(!empty($line)) {
-				$results[] =  explode(",", $line);
+			$results = [];
+			foreach ($csvLines as $line) {
+				if(!empty($line)) {
+					$results[] =  explode(",", $line);
+				}
 			}
-		}
+			return $results;
 
-		return $results;
+		} catch (\Exception $e){
+			return $e->getMessage();
+		}
 	}
 }

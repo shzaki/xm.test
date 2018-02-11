@@ -33,6 +33,6 @@ class NasdaqQuotesMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.nasdaq');
+        return $this->view('mail');
     }
 }

@@ -1,6 +1,6 @@
 <div>
 	<table id="nasdaq" class="table table-hover table-striped datatable">
-		@foreach($results as $row)
+		@forelse($results as $row)
 				@if ($loop->first)
 					<thead>
 						<tr>
@@ -16,7 +16,12 @@
 						@endforeach
 					</tr>
 				@endif
-
-		@endforeach
+		@empty
+			<thead>
+			<tr>
+				<th>No Data Found</th>
+			</tr>
+			</thead>
+		@endforelse
 	</table>
 </div>

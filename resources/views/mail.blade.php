@@ -24,20 +24,17 @@
 <div class="container">
 	@include('form ')
 </div>
-@if(isset($results) and is_array($results))
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-6">
-				@include('table ')
-			</div>
-			<div class="col-sm-6">
-				@include('chart ')
-			</div>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6">
+			@include('table ')
+		</div>
+		<div class="col-sm-6">
+			@include('chart ')
 		</div>
 	</div>
-@else
-	{{ $results ?? '' }}
-@endif
+</div>
+
 <script type="text/javascript">
 	$(function () {
 		$('#fromDate').datepicker({ maxDate: new Date, dateFormat:'yy-mm-dd',

@@ -46,7 +46,7 @@ class NasdaqController extends Controller
 		// Add loading page
 		// Add sweet alert
 
-		//Mail::to($data['email'])->send(new NasdaqQuotesMail($data));
+		//Mail::to($viewData['email'])->send(new NasdaqQuotesMail($viewData));
 		// find a proper smtp
 
 
