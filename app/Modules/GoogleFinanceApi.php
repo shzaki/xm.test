@@ -18,8 +18,6 @@ class GoogleFinanceApi
 {
 	private $url;
 
-	// TODO: Change to use interface or abstract class
-
 	/**
 	 * GoogleFinanceApi constructor.
 	 * This will build the url, need to think about a better place to store this url or make a more generic class to call any API

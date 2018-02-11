@@ -4,6 +4,8 @@ namespace App\Modules;
 
 use Illuminate\Support\Facades\Validator;
 
+// TODO: Change to use interface or abstract class
+
 class Nasdaq
 {
 	private $symbol, $email, $fromDate, $toDate;

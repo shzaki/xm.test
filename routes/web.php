@@ -12,5 +12,7 @@
 */
 
 
+Route::get('/get-symbols',  '\App\Http\Controllers\NasdaqController@getSymbols')->name('get-symbols');
+
 Route::get('/nasdaq',  '\App\Http\Controllers\NasdaqController@getForm')->name('nasdaq');
 Route::post('/nasdaq', '\App\Http\Controllers\NasdaqController@postForm')->name('nasdaq');

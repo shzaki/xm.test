@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Modules\GoogleFinanceApi;
 use App\Modules\Nasdaq;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 
 class NasdaqController extends Controller
@@ -56,5 +57,33 @@ class NasdaqController extends Controller
 
 
 		return view('nasdaq')->with($viewData);
+	}
+
+	public function getSymbols()
+	{
+		try {
+			$client = new Client();
+			$response 	 = $client->request('GET', 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NASDAQ&render=download', ['stream' => true]);
+			$csvContents = $response->getBody()->getContents();
+
+			$companies 	 = GoogleFinanceApi::convertCsvToArray($csvContents);
+
+			array_forget($companies, 0);
+
+			$results = [];
+
+			foreach($companies as $company) {
+				$results[] = $company[0];
+			}
+
+			return $results;
+
+
+
+
+		} catch (\Exception $e){
+
+			return [$e->getMessage(), ''];
+		}
 	}
 }

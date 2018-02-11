@@ -1,8 +1,7 @@
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
 
-<div id="container" style="height: 400px; min-width: 310px">
-</div>
+<div id="chart" style="height: 100%"></div>
 
 <script>
 
@@ -11,7 +10,7 @@
 		data = ({{$jsonResults}});
 
 		console.log(data);
-		Highcharts.stockChart('container', {
+		Highcharts.stockChart('chart', {
 
 			rangeSelector: {
 				selected: 1

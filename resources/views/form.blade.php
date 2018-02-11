@@ -3,12 +3,16 @@
 	<div class="form-group row">
 		<label for="symbol" class="col-sm-2 col-form-label">Symbol</label>
 		<div class="col-sm-10">
-			<input required type="text" name="symbol" class="form-control-plaintext" id="symbol"  placeholder="Company Symbol"
-				   @if(!empty(Request::old('symbol')))
-				   value="{{Request::old('symbol')}}"
-				   @elseif(isset($symbol))
-				   value="{{$symbol}}"
-					@endif >
+			<select required name="symbol" class="form-control chosen-select" id="symbol">
+				@if(!empty(Request::old('symbol')))
+					<option value="{{Request::old('symbol')}}" selected>{{Request::old('symbol')}}</option>
+				@elseif(isset($symbol))
+					<option value="{{$symbol}}" selected>{{$symbol}}</option>
+				@else
+					<option value="" selected>Company Symbol</option>
+				@endif
+
+			</select>
 		</div>
 	</div>
 	<div class="form-group row">
