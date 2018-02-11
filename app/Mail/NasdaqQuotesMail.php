@@ -11,7 +11,7 @@ class NasdaqQuotesMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $symbol, $email, $fromDate, $toDate;
+    public $symbol, $email, $fromDate, $toDate, $results;
 
     /**
      * Create a new message instance.
@@ -24,6 +24,7 @@ class NasdaqQuotesMail extends Mailable
         $this->email 	= $data['email'];
         $this->fromDate = $data['fromDate'];
         $this->toDate 	= $data['toDate'];
+        $this->results 	= $data['results'];
     }
 
     /**
