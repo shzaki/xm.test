@@ -17,13 +17,13 @@ use GuzzleHttp\Client;
  */
 class GoogleFinanceApi
 {
-	private $url;
+	private $url = 'https://finance.google.com/finance/historical?';
 
 	/**
 	 * GoogleFinanceApi constructor.
 	 * This will build the url, need to think about a better place to store this url or make a more generic class to call any API
 	 *
-	 * @param Nasdaq $nasdaq
+	 * @param Nasdaq $nasdaq //TODO: if more stock markets then use an interface instead
 	 *
 	 * @param string $output
 	 */
@@ -35,7 +35,7 @@ class GoogleFinanceApi
 
 		// Building the url and encoding the dates
 		$query_string = 'output='. $output . '&q=' .  $nasdaq->getSymbol() . '&startdate=' . rawurlencode($startDate) . '&enddate=' . rawurlencode($endDate);
-		$this->url = 'https://finance.google.com/finance/historical?' . $query_string;
+		$this->url .= $query_string;
  	}
 
 	/**
@@ -46,7 +46,7 @@ class GoogleFinanceApi
  	public function callApi()
 	{
 		try {
-			$client = new Client();
+			$client = new Client(); //TODO: Make a ClientHelper
 			$response 	 = $client->request('GET', $this->url, ['stream' => true]);
 			$csvContents = $response->getBody()->getContents();
 			$results 	 = CsvHelper::convertCsvToArray($csvContents);

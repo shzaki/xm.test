@@ -27,16 +27,12 @@
 			},
 			success: function (data) {
 				for (var i=0;i<data.length;i++) {
-					// Trimming quotes around symbol
-
-					symbol = data[i].substring(1, data[i].length-1);
-
-					$('<option/>').val(symbol).html(symbol).appendTo('#symbol');
+					$('<option/>').val(data[i]).html(data[i]).appendTo('#symbol');
 				}
 				$("#symbol").trigger("chosen:updated");
 			},
 			error: function (data) {
-				alert('Error');
+				alert('Error while getting company symbols.');
 				console.log(data);
 			}
 		});

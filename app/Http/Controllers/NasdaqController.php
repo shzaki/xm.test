@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\CsvHelper;
 use App\Modules\GoogleFinanceApi;
 use App\Modules\Nasdaq;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NasdaqQuotesMail;
+use Illuminate\Support\Facades\Validator;
+use App\Helpers\TraderHelper;
+use Illuminate\Support\Facades\Redirect;
 
 
 class NasdaqController extends Controller
@@ -34,29 +36,34 @@ class NasdaqController extends Controller
     public function postForm(Request $request)
 	{
 		$inputs = $request->only(['symbol', 'email', 'fromDate', 'toDate']);
+		$rules  = [
+			'symbol' 	=> 'required|in:' . implode(',', TraderHelper::getCompanySymbols()),
+			'email'		=> 'required|email',
+			'fromDate'  =>  'required|date|date_format:Y-m-d|before:tomorrow|before_or_equal:toDate',
+			'toDate'    =>  'required|date|date_format:Y-m-d|before:tomorrow|after_or_equal:fromDate'
+		];
+		$messages = [
+			// Custom Messages if needed
+		];
 
-		$viewData = $inputs;
+		// data validation
+		$validator = Validator::make($inputs, $rules, $messages);
+		if ($validator->fails()) {
+			return Redirect::route('nasdaq')
+				->withErrors($validator)
+				->withInput();
+		}
 
+		// Validation is ok
 		$nasdaqObj = new Nasdaq($inputs);
-
 		$googleObj = new GoogleFinanceApi($nasdaqObj);
-
 		[$results, $jsonResults] = $googleObj->callApi();
 
+		$viewData = $inputs;
 		$viewData['results'] 	 = $results;
 		$viewData['jsonResults'] = $jsonResults;
-
-		// Arrange source code
-
-		// Add Symbols to DB or cache
-		// Do validation on it clientside and server side
-
-		// Add loading page
-		// Add sweet alert
-
+		// Send email
 		Mail::to($viewData['email'])->send(new NasdaqQuotesMail($viewData));
-		// find a proper smtp
-
 
 		return view('nasdaq')->with($viewData);
 	}
@@ -68,26 +75,6 @@ class NasdaqController extends Controller
 	 */
 	public function getSymbols()
 	{
-		try {
-			$client = new Client();
-			$response 	 = $client->request('GET', 'http://www.nasdaq.com/screening/companies-by-industry.aspx?exchange=NASDAQ&render=download', ['stream' => true]);
-			$csvContents = $response->getBody()->getContents();
-
-			$companies 	 = CsvHelper::convertCsvToArray($csvContents);
-
-			array_forget($companies, 0);
-
-			$results = [];
-
-			foreach($companies as $company) {
-				$results[] = $company[0];
-			}
-
-			return $results;
-
-		} catch (\Exception $e){
-
-			return $e->getMessage();
-		}
+		return TraderHelper::getCompanySymbols();
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace App\Modules;
 
-use Illuminate\Support\Facades\Validator;
+
 
 // TODO: Change to use interface or abstract class
 
@@ -21,26 +21,6 @@ class Nasdaq
 		$this->email 	= $inputs['email'];
 		$this->fromDate = $inputs['fromDate'];
 		$this->toDate 	= $inputs['toDate'];
-
-		$rules  = [
-			'symbol' 	=> 'required',
-			'email'		=> 'required|email',
-			'fromDate'  =>  'required|date|date_format:Y-m-d|before:tomorrow|before_or_equal:toDate',
-			'toDate'    =>  'required|date|date_format:Y-m-d|before:tomorrow|after_or_equal:fromDate'
-		];
-
-		$messages = [
-			// Custom Messages if needed
-		];
-
-		// data validation
-		$validator = Validator::make($inputs, $rules, $messages);
-
-		if ($validator->fails()) {
-			return redirect('/nasdaq')
-				->withErrors($validator)
-				->withInput();
-		}
 	}
 
 	/**

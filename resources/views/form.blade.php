@@ -9,7 +9,7 @@
 				@elseif(isset($symbol))
 					<option value="{{$symbol}}" selected>{{$symbol}}</option>
 				@else
-					<option value="" selected>Company Symbol</option>
+					<option value="" disabled selected>Company Symbol</option>
 				@endif
 
 			</select>
@@ -26,7 +26,6 @@
 					@endif>
 		</div>
 	</div>
-
 	<div class="form-group row">
 		<label for="fromDate" class="col-sm-2 col-form-label">From</label>
 		<div class="col-sm-10">
@@ -38,7 +37,6 @@
 					@endif >
 		</div>
 	</div>
-
 	<div class="form-group row">
 		<label for="toDate" class="col-sm-2 col-form-label">To</label>
 		<div class="col-sm-10">
@@ -50,9 +48,7 @@
 					@endif>
 		</div>
 	</div>
-
 	<div class="form-group row">
 		<button type="submit" class="btn btn-primary pull-right">Submit</button>
 	</div>
-
 </form>
