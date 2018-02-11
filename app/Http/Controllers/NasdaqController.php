@@ -22,21 +22,12 @@ class NasdaqController extends Controller
 
 		$googleObj = new GoogleFinanceApi($nasdaqObj);
 
-		$results = $googleObj->callApi();
+		[$results, $jsonResults] = $googleObj->callApi();
 
-		$viewData['results'] = $results;
+		$viewData['results'] 	 = $results;
+		$viewData['jsonResults'] = $jsonResults;
 
-		// get result back as attachment
 
-		// get result back as numbers
-
-		// show results in the email as table
-
-		// send result back to the form
-
-		// use datatables
-
-		// use highcharts
 
 		// Arrange source code
 
@@ -46,7 +37,7 @@ class NasdaqController extends Controller
 		// Add loading page
 		// Add sweet alert
 
-		Mail::to($viewData['email'])->send(new NasdaqQuotesMail($viewData));
+		//Mail::to($viewData['email'])->send(new NasdaqQuotesMail($viewData));
 		// find a proper smtp
 
 

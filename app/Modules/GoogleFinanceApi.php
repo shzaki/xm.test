@@ -31,7 +31,7 @@ class GoogleFinanceApi
 		$startDate 	= (new Carbon($nasdaq->getFromDate()))->toFormattedDateString();
 		$endDate	= (new Carbon($nasdaq->getToDate()))->toFormattedDateString();
 
-		$query_string = 'output='. $output . '&q=' .  $nasdaq->getSymbol() . '&startDate=' . urlencode($startDate) . '&endDate=' . urlencode($endDate);
+		$query_string = 'output='. $output . '&q=' .  $nasdaq->getSymbol() . '&startdate=' . rawurlencode($startDate) . '&enddate=' . rawurlencode($endDate);
 		$this->url = 'https://finance.google.com/finance/historical?' . $query_string;
  	}
 
@@ -51,10 +51,31 @@ class GoogleFinanceApi
 					$results[] =  explode(",", $line);
 				}
 			}
-			return $results;
+			return [$results, self::getJsonResults($results)];
 
 		} catch (\Exception $e){
 			return $e->getMessage();
 		}
+	}
+
+	public static function getJsonResults($results)
+	{
+		$tempresults = [];
+		foreach($results as $key=>$row)	{
+			if($key != 0) {
+				foreach($row as $rowKey=>&$cell) {
+					if ($rowKey == 0) {
+						$cell = strtotime($cell)*1000;
+					}
+				}
+				$tempresults[] = $row;
+			}
+		}
+
+		usort ( $tempresults , function ($item1, $item2) {
+			return $item1[0] <=> $item2[0];
+		});
+
+		return json_encode($tempresults, JSON_NUMERIC_CHECK);
 	}
 }

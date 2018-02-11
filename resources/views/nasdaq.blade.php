@@ -54,8 +54,6 @@
 		$(".date-picker").keypress(function(event) {event.preventDefault();});
 
 		$(".datatable").DataTable();
-
-
 	});
 
 </script>
