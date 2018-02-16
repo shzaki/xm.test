@@ -1,60 +1,61 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+PHP Exercise
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+# PHP Exercise (2 days maximum)
 
-## About Laravel
+In this exercise you need to create a form with 4 input fields:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+- Company Symbol
+- Start Date (YYYY-mm-dd)
+- End Date (YYYY-mm-dd)
+- Email
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+When the user submits the form you must do the following:
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+**1)** Validate the form both on client and server side and place appropriate messages on both cases.
+All fields must be mandatory. Include also validation for:
 
-## Learning Laravel
+- formatting and logic of dates
+- existence of company symbol
+- formatting of email
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+**2)** Display on screen the historical quotes for the submitted company in the given date range in
+table format (Date, Open, High, Low, Close and Volume values).
+Company symbols can be found here:
+[http://www.nasdaq.com/screening/companies-by-name.aspx](http://www.nasdaq.com/screening/companies-by-name.aspx)
+(For download in excel format: [http://www.nasdaq.com/screening/companies-by-](http://www.nasdaq.com/screening/companies-by-)
+name.aspx?&render=download)
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+Data should be retrieved by using the API:
+https://finance.google.com/finance/historical?output=csv&q={symbol}&startdate={start_date}&e
+nddate={end_date}
+where:
+{symbol} = value of the field Company Symbol
+{start_date} = value of the field Start Date in the format M d, Y
+{end_date} = value of the field End Date in the format M d, Y
 
-## Laravel Sponsors
+**Examples**
+https://finance.google.com/finance/historical?output=csv&q=GOOG&startdate=Nov%2002,%
+01 7&enddate=Nov%2017,%
+https://finance.google.com/finance/historical?output=csv&q=GOOG&startdate=Oct%2002,%
+17&enddate=Nov%2017,%
+As you can see in the above examples, the spaces in the dates are replaced with %20 (url
+encoding).
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+**3)** Display a chart of the open and close prices in the given date range.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
 
-## Contributing
+PHP Exercise - v17.0. 2 2
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**4)** Send an email using the submitted company’s name as subject (i.e. Google) and the start date
+and end date as body (i.e. "From 2016- 01 - 01 to 2016- 02 - 01").
 
-## Security Vulnerabilities
+## Notes
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- The user must enter date using jQuery UI datepicker
+    [http://jqueryui.com/datepicker/](http://jqueryui.com/datepicker/)
+- You can develop the exercise using plain PHP, but PHP framework (Symfony, Laravel etc) is
+    preferred.
+- In case you will not use any PHP framework, the email must be send using the swift mailer
+    https://github.com/swiftmailer/swiftmailer
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# xm.test
